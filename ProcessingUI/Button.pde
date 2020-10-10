@@ -1,49 +1,47 @@
 class Button {
-  float x, y;
-  float btnWidth, btnHeight;
-  public String btnText;
+  private PVector position;
+  private int w, h;
+  private String text;
+  private color fillColor, textColor;
 
-  boolean toggled = false;
-  color currentColor;
-
-  public Button(PVector pos, String btnText) {
-    this.x = pos.x;
-    this.y = pos.y;
-    this.btnWidth = 100;
-    this.btnHeight = 50;
-    this.btnText = btnText;
-    this.currentColor = color(200, 0, 0);
+  public Button(PVector position, String text, int w, int h, color fillColor, color textColor) {
+    this.position = position;
+    this.position = position;
+    this.w = w;
+    this.h = h;
+    this.text = text;
+    this.fillColor = fillColor;
+    this.textColor = textColor;
   }
   
-  public void setText(String text){
-    this.btnText = text;
-  }
-  
-  private boolean isHover() {
-    return (mouseX > x && mouseX < x+btnWidth && mouseY > y && mouseY < y+btnHeight);
+  public Button(PVector position, String text, int w, int h) {
+    this.position = position;
+    this.position = position;
+    this.w = w;
+    this.h = h;
+    this.text = text;
+    this.fillColor = color(255);
+    this.textColor = color(0);
   }
 
-  private void clickedOn() {
-    if (isHover()) {
-      currentColor = ButtonColor.ONHOVER;
-    } else {
-      currentColor = ButtonColor.INACTIVE;
-    }
+  public void setText(String text) {
+    this.text = text;
+  }
+
+  public boolean isHover() {
+    return (mouseX > position.x && mouseX < position.x+w && mouseY > position.y && mouseY < position.y+w);
+  }
+
+  public boolean isClicked() {
+    return isHover() && mousePressed;
   }
 
   public void draw() {
-    clickedOn();
-    fill(currentColor);
-    rect(x, y, btnWidth, btnHeight);
+    fill(fillColor);
+    rect(position.x, position.y, w, h);
     textAlign(CENTER);
-    fill(0);
+    fill(textColor);
     textSize(20);
-    text(btnText, x+btnWidth/2, y+btnHeight/2+7);
+    text(text, position.x+w/2, position.y+h/2);
   }
 }
-
-static class ButtonColor {
-  public static int ACTIVE = -1;
-  public static int INACTIVE = -5526613;
-  public static int ONHOVER = -10197916;
-} 
